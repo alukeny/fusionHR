@@ -100,7 +100,7 @@ namespace DAL
         }
 
         //Classe para retornar um Id Numérico
-        public int retornarIdNumerico(string strQuery)
+        public string retornarCodigo(string strQuery)
         {
             MySqlConnection cn = new MySqlConnection();
             try
@@ -111,11 +111,11 @@ namespace DAL
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = cn;
                 MySqlDataReader dr = cmd.ExecuteReader();
-                int codigo;
+                string codigo;
                 if (dr.Read())
-                    codigo = Convert.ToInt16(dr[0]) + 1;
+                    codigo = Convert.ToString(dr[0]) + 1;
                 else
-                    codigo = 1;
+                    codigo = "";
                 return codigo;
             }
             catch (Exception ex)

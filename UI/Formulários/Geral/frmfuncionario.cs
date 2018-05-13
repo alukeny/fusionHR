@@ -27,27 +27,26 @@ namespace UI
                 if (ctl is TextBox) ctl.Text = "";
             }
         }
-        private void txtCodigoInterno_TextChanged(object sender, EventArgs e)
+        private void txtCodigo_TextChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void txtCodigoInterno_Leave(object sender, EventArgs e)
+        private void txtCodigo_Leave(object sender, EventArgs e)
         {
-            int codigoInterno = 0;
-            if (txtCodigoInterno.Text.Trim() != "")
+            string codigo = "";
+            if (txtCodigo.Text.Trim() != "")
             {
-                codigoInterno = Convert.ToInt16(txtCodigoInterno.Text);
+                codigo = Convert.ToString(txtCodigo.Text);
             }
             clsFuncionario funcionario = new clsFuncionario();
-            funcionario._codigoInterno = codigoInterno;
+            funcionario._codigo = codigo;
             funcionario.buscar();
             if (funcionario._nome == null)
             {
                 //preparando para inclusao
                 limparTexto(gpbComponentes);
-                txtCodigoInterno.Text = "";
-                txtCodigoInterno.Enabled = false;
+                txtCodigo.ReadOnly = true;
                 btnGravar.Enabled = true;
                 btnCancelar.Enabled = true;
             }
@@ -55,8 +54,8 @@ namespace UI
             {
                 //preparando para alteracao
                 limparTexto(gpbComponentes);
-                txtCodigoInterno.Enabled = false;
-                txtCodigoInterno.Text = Convert.ToString(funcionario._codigoInterno);
+                txtCodigo.ReadOnly = true;
+                txtCodigo.Text = Convert.ToString(funcionario._codigo);
                 txtNome.Text = Convert.ToString(funcionario._nome);
                 dtpDataNascimento.Text = Convert.ToString(funcionario._dataNascimento);
                 txtNumeroBI.Text = Convert.ToString(funcionario._numeroBI);
@@ -76,8 +75,8 @@ namespace UI
             try
             {
                 clsFuncionario funcionario = new clsFuncionario();
-                //Dispara o método para buscar o codigoInterno
-                funcionario._codigoInterno = funcionario.buscarID();
+                //Dispara o método para buscar o codigo
+                funcionario._codigo = funcionario.buscarCodigo();
                 funcionario._nome = txtNome.Text;
                 funcionario._dataNascimento = dtpDataNascimento.Text;
                 funcionario._numeroBI = txtNumeroBI.Text;
@@ -85,7 +84,7 @@ namespace UI
                 funcionario._morada = txtMorada.Text;
                 funcionario.gravar();
                 string mensagem = "Registro Funcionário: " +
-                    funcionario._codigoInterno + "\nNome Completo: " + funcionario._nome +
+                    funcionario._codigo + "\nNome Completo: " + funcionario._nome +
                     "\nGravado com sucesso";
                 MessageBox.Show(mensagem, "Sucesso",
                     MessageBoxButtons.OK,
@@ -93,8 +92,8 @@ namespace UI
                 limparTexto(gpbComponentes);
                 btnGravar.Enabled = false;
                 btnCancelar.Enabled = false;
-                txtCodigoInterno.Enabled = true;
-                txtCodigoInterno.Focus();
+                txtCodigo.Enabled = true;
+                txtCodigo.Focus();
             }
             catch (Exception ex)
             {
@@ -108,7 +107,7 @@ namespace UI
             try
             {
                 clsFuncionario funcionario = new clsFuncionario();
-                funcionario._codigoInterno = int.Parse(txtCodigoInterno.Text);
+                funcionario._codigo = txtCodigo.Text;
                 funcionario._nome = txtNome.Text;
                 funcionario._dataNascimento = dtpDataNascimento.Text;
                 funcionario._numeroBI = txtNumeroBI.Text;
@@ -116,7 +115,7 @@ namespace UI
                 funcionario._morada = txtMorada.Text;
                 funcionario.actualizar();
                 string mensagem = "Registro Funcionário: " +
-                    funcionario._codigoInterno + "\nNome Completo: " + funcionario._nome +
+                    funcionario._codigo + "\nNome Completo: " + funcionario._nome +
                     "\nAlterado com sucesso";
                 MessageBox.Show(mensagem, "Sucesso",
                     MessageBoxButtons.OK,
@@ -125,8 +124,8 @@ namespace UI
                 btnGravar.Enabled = false;
                 btnCancelar.Enabled = false;
                 btnExcluir.Enabled = false;
-                txtCodigoInterno.Enabled = true;
-                txtCodigoInterno.Focus();
+                txtCodigo.Enabled = true;
+                txtCodigo.Focus();
             }
             catch (Exception ex)
             {
@@ -138,7 +137,7 @@ namespace UI
         {
             string pergunta;
             pergunta = "Deseja excluir o Funcionário: \n" +
-                txtCodigoInterno.Text + ": " + txtNome.Text +
+                txtCodigo.Text + ": " + txtNome.Text +
                 "  ?";
             int ret = Convert.ToInt16(MessageBox.Show(pergunta, "Atenção",
                 MessageBoxButtons.YesNo,
@@ -146,11 +145,11 @@ namespace UI
             if (ret == 6)
             {
                 clsFuncionario funcionario = new clsFuncionario();
-                funcionario._codigoInterno = int.Parse(txtCodigoInterno.Text);
+                funcionario._codigo = txtCodigo.Text;
                 funcionario._nome = txtNome.Text;
                 funcionario.excluir();
                 string mensagem = "Registro Funcionário: " +
-                    funcionario._codigoInterno + "\nNome: " + funcionario._codigoInterno +
+                    funcionario._codigo + "\nNome: " + funcionario._codigo +
                     "\nExcluído com sucesso";
                 MessageBox.Show(mensagem, "Sucesso",
                     MessageBoxButtons.OK,
@@ -159,8 +158,8 @@ namespace UI
                 btnGravar.Enabled = false;
                 btnCancelar.Enabled = false;
                 btnExcluir.Enabled = false;
-                txtCodigoInterno.Enabled = true;
-                txtCodigoInterno.Focus();
+                txtCodigo.Enabled = true;
+                txtCodigo.Focus();
             }
             else
             {
@@ -177,8 +176,8 @@ namespace UI
             btnActualizar.Enabled = false;
             btnCancelar.Enabled = false;
             btnExcluir.Enabled = false;
-            txtCodigoInterno.Enabled = true;
-            txtCodigoInterno.Focus();
+            txtCodigo.Enabled = true;
+            txtCodigo.Focus();
         }
 
         private void btnSair_Click(object sender, EventArgs e)

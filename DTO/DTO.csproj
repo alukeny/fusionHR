@@ -40,7 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entidades\clsDependente.cs" />
     <Compile Include="Entidades\clsFuncionario.cs" />
+    <Compile Include="Entidades\clsIRT.cs" />
+    <Compile Include="Entidades\clsPeriodo.cs" />
+    <Compile Include="Entidades\clsSubsidio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
