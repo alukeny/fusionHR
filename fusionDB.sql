@@ -1,0 +1,136 @@
+CREATE DATABASE fusion;
+USE fusion;
+
+CREATE TABLE IF NOT EXISTS funcionario(
+id 				INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+naturalidade_fk	INT NULL,
+codigo			NVARCHAR(5) NOT NULL,
+nome			NVARCHAR(50) NOT NULL,
+dataNascimento	NVARCHAR(50) NULL,
+numeroBI		NVARCHAR(50) NOT NULL,
+salarioBase     DECIMAL NULL,
+morada    		NVARCHAR(100) NULL,
+dataRegisto 	DATE,
+estado			BOOLEAN DEFAULT TRUE,
+
+FOREIGN KEY (naturalidade_fk) REFERENCES provincia(id)
+);
+
+CREATE TABLE IF NOT EXISTS dependente(
+id				INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+funcionario_fk	INT NOT NULL,
+codigo			NVARCHAR(5) NOT NULL,
+nome			NVARCHAR(50) NOT NULL,
+dataNascimento	NVARCHAR(20) Null,
+estado			BOOLEAN DEFAULT TRUE,
+FOREIGN KEY (funcionario_fk) REFERENCES funcionario (id)
+);
+
+
+CREATE TABLE IF NOT EXISTS provincia(
+id				INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+codigo			NVARCHAR(5) NOT NULL,
+descricao		NVARCHAR(50) NOT NULL,
+dataRegisto 	DATE,
+estado			BOOLEAN DEFAULT TRUE
+);
+
+CREATE TABLE IF NOT EXISTS municipio(
+id				INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+provincia_fk	INT NOT NULL,
+codigo			NVARCHAR(5) NOT NULL,
+descricao		NVARCHAR(50) NOT NULL,
+dataRegisto 	DATE,
+estado			BOOLEAN DEFAULT TRUE,
+FOREIGN KEY (provincia_fk) REFERENCES provincia(id)
+);
+
+
+CREATE TABLE IF NOT EXISTS localizacao(
+id				INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+entidade_FK		INT NOT NULL,
+codigo			NVARCHAR(5) NOT NULL,
+pai				NVARCHAR(50) NOT NULL,
+mae				NVARCHAR(50) NOT NULL,
+FOREIGN KEY (funcionario_fk) REFERENCES funcionario (id)
+);
+
+
+
+
+CREATE TABLE IF NOT EXISTS irt(
+id 				INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+codigo			NVARCHAR(5) NOT NULL,
+descricao		NVARCHAR(20) NULL,
+de				DECIMAL NOT NULL,
+ate				DECIMAL NOT NULL,
+pertagem		NVARCHAR(5) NOT NULL,
+dataRegisto		DATE,
+estado			BOOLEAN DEFAULT TRUE
+);
+
+
+CREATE TABLE IF NOT EXISTS subsidio(
+id				INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+codigo			NVARCHAR(5) NOT NULL,
+descricao		NVARCHAR(20) NULL,
+valor			DECIMAL NULL,
+percentagem		NVARCHAR(5) NULL,
+dataRegisto  	DATE,
+estado			BOOLEAN DEFAULT TRUE
+);
+
+
+CREATE TABLE IF NOT EXISTS desconto(
+id 				INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+codigo			NVARCHAR(5) NOT NULL,
+descricao		NVARCHAR(20) NOT NULL,
+valorUnitario	DECIMAL,
+valorPercentual	NVARCHAR(5),
+dataRegisto 	DATE,
+estado			BOOLEAN DEFAULT TRUE
+);
+
+/*
+TIPOS DE DESCONTOS
+ID		DESCRIÇÃO					VALOR UNITARIO			VALOR PERCENTUAL
+1		INSS						15%						2000
+2		IRT							3%						750
+3		CONTRIBUIÇÃO SINDICAL								UM DIA DE TRABALHO
+4		ADIANTAMENTO DE SALARIO								VALOR PEDIDO
+5		VALE DE TRANSPORTE									VALOR PEDIDO
+6		VALE DE ALIMENTAÇÃO									VALOR PEDIDO
+7		ATRASOS E FALTAS									UM DIA DE TRABALHO
+
+*/
+
+CREATE TABLE IF NOT EXISTS falta(
+id 				INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+codigo			NVARCHAR(5) NOT NULL,
+descricao		NVARCHAR(20) NULL,
+dataRegisto		DATE,
+estado			BOOLEAN DEFAULT TRUE
+);
+
+
+CREATE TABLE IF NOT EXISTS marcacao(
+id 					INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+idDesconto_FK		INT,
+idFuncionario_FK 	INT,
+dataFalta			DATE,
+
+);
+
+CREATE TABLE IF NOT EXISTS periodo(
+id					INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+codigo				NVARCHAR(5) NOT NULL,
+mesExtenso			NVARCHAR(10) NOT NULL,
+mesNumerico			INT NOT NULL,
+diasUteis			INT NOT NULL,
+diaInicio			INT NOT NULL,
+diaFim				INT NOT NULL,
+dataRegisto			DATE,
+estado				BOOLEAN DEFAULT TRUE
+)
+
+
